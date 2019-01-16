@@ -451,8 +451,8 @@ def Pulsar(*args, **kwargs):
     timing_package = kwargs.get('timing_package', 'tempo2')
 
     if pint:
-        toas = list(filter(lambda x: isinstance(x, toa.TOAs), args))
-        model = list(filter(lambda x: isinstance(x, TimingModel), args))
+        self.toas = list(filter(lambda x: isinstance(x, toa.TOAs), args))[0]
+        self.model = list(filter(lambda x: isinstance(x, TimingModel), args))[0]
 
     t2pulsar = list(filter(lambda x: isinstance(x, t2.tempopulsar), args))
 
@@ -462,7 +462,7 @@ def Pulsar(*args, **kwargs):
                           x.split('.')[-1] in ['tim', 'toa'], args))
 
     if pint and toas and model:
-        return PintPulsar(toas[0], model[0], sort=sort, planets=planets)
+        return PintPulsar(toas, model, sort=sort, planets=planets)
     elif t2pulsar:
         return Tempo2Pulsar(t2pulsar[0], sort=sort, drop_t2pulsar=drop_t2pulsar,
                             planets=planets)
