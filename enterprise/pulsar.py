@@ -282,6 +282,9 @@ class PintPulsar(BasePulsar):
         self.planets = planets
         self.name = model.PSR.value
 
+        self.model = model
+        self.pint_toas = toas
+
         self._toas = np.array(toas.table['tdbld'], dtype='float64') * 86400
         self._residuals = np.array(resids(toas, model).time_resids.to(u.s),
                                    dtype='float64')
@@ -451,8 +454,8 @@ def Pulsar(*args, **kwargs):
     timing_package = kwargs.get('timing_package', 'tempo2')
 
     if pint:
-        self.toas = list(filter(lambda x: isinstance(x, toa.TOAs), args))[0]
-        self.model = list(filter(lambda x: isinstance(x, TimingModel), args))[0]
+        toas = list(filter(lambda x: isinstance(x, toa.TOAs), args))[0]
+        model = list(filter(lambda x: isinstance(x, TimingModel), args))[0]
 
     t2pulsar = list(filter(lambda x: isinstance(x, t2.tempopulsar), args))
 
