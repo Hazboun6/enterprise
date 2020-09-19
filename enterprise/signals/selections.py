@@ -7,7 +7,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import functools
 import inspect
 
-import numpy as np
+import autograd.numpy as np
 
 
 def call_me_maybe(obj):

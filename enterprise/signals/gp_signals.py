@@ -12,7 +12,7 @@ import logging
 import math
 import platform
 
-import numpy as np
+import autograd.numpy as np
 
 from enterprise.signals import parameter, selections, signal_base, utils
 from enterprise.signals.parameter import function

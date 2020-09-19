@@ -1,8 +1,8 @@
 from __future__ import division
 
 import healpy as hp
-import numpy as np
-import scipy.special as ss
+import autograd.numpy as np
+import autograd.scipy.special as ss
 
 
 """

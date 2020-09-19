@@ -6,7 +6,7 @@ delay that is to be subtracted from the residuals.
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import numpy as np
+import autograd.numpy as np
 
 from enterprise import pulsar
 from enterprise.signals import parameter, selections, signal_base, utils

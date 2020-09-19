@@ -10,8 +10,8 @@ import collections.abc
 import itertools
 import logging
 
-import numpy as np
-import scipy.linalg as sl
+import autograd.numpy as np
+import autograd.scipy.linalg as sl
 import scipy.sparse as sps
 import six
 
@@ -602,7 +602,7 @@ class PTA(object):
         ct = 0
         for p in self.params:
             n = p.size if p.size else 1
-            ret[p.name] = xs[ct : ct + n] if n > 1 else float(xs[ct])
+            ret[p.name] = xs[ct : ct + n] if n > 1 else xs[ct]#float(xs[ct])
             ct += n
         return ret
 

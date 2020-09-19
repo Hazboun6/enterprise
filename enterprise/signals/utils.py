@@ -6,12 +6,12 @@ functions for use in other modules.
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import numpy as np
-import scipy.linalg as sl
+import autograd.numpy as np
+import autograd.scipy.linalg as sl
 import scipy.sparse as sps
-import scipy.special as ss
+import autograd.scipy.special as ss
 from pkg_resources import Requirement, resource_filename
-from scipy.integrate import odeint
+from autograd.scipy.integrate import odeint
 from scipy.interpolate import interp1d
 
 import enterprise

@@ -6,7 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import functools
 import inspect
 
-import numpy as np
+import autograd.numpy as np
 import scipy.stats
 
 from enterprise.signals.selections import selection_func

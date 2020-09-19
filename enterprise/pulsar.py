@@ -9,7 +9,7 @@ import logging
 import os
 
 import astropy.units as u
-import numpy as np
+import autograd.numpy as np
 from ephem import Ecliptic, Equatorial
 
 import enterprise
