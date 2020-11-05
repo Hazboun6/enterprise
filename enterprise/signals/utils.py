@@ -5,13 +5,15 @@ functions for use in other modules.
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-
-import autograd.numpy as np
-import autograd.scipy.linalg as sl
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
+import numpy as rnp
+import jax.scipy.linalg as sl
 import scipy.sparse as sps
-import autograd.scipy.special as ss
+import jax.scipy.special as ss
 from pkg_resources import Requirement, resource_filename
-from autograd.scipy.integrate import odeint
+from scipy.integrate import odeint
 from scipy.interpolate import interp1d
 
 import enterprise
@@ -247,7 +249,7 @@ def make_ecc_interpolant():
 
     pth = resource_filename(Requirement.parse("libstempo"), "libstempo/ecc_vs_nharm.txt")
 
-    fil = np.loadtxt(pth)
+    fil = rnp.loadtxt(pth)
 
     return interp1d(fil[:, 0], fil[:, 1])
 

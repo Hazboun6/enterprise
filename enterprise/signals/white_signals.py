@@ -4,9 +4,9 @@ defined as the class of signals that only modifies the white noise matrix `N`.
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-
-import autograd.numpy as np
-import scipy.sparse
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
 
 from enterprise.signals import parameter, selections, signal_base, utils
 from enterprise.signals.parameter import function
@@ -48,7 +48,7 @@ def WhiteNoise(varianceFunction, selection=Selection(selections.no_selection), n
             ret = 0
             for key, mask in zip(self._keys, self._masks):
                 ret += self._ndiag[key](params=params) * mask
-            return signal_base.ndarray_alt(ret)
+            return ret#signal_base.ndarray_alt(ret)
 
     return WhiteNoise
 
@@ -198,7 +198,7 @@ def EcorrKernelNoise(
                 self._setup_sparse(psr)
 
         def _setup_sparse(self, psr):
-            Ns = scipy.sparse.csc_matrix((len(psr.toas), len(psr.toas)))
+            Ns = ss.csc_matrix((len(psr.toas), len(psr.toas)))
             for key, slices in self._slices.items():
                 for slc in slices:
                     if slc.stop - slc.start > 1:

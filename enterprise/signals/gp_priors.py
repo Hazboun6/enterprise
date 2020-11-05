@@ -4,9 +4,10 @@ functions for use in other modules.
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-
-import autograd.numpy as np
-import autograd.scipy.stats
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
+import jax.scipy.stats as ss
 
 from enterprise.signals import parameter
 from enterprise.signals.parameter import function
@@ -71,12 +72,12 @@ def t_process_adapt(f, log10_A=-15, gamma=4.33, alphas_adapt=None, nfreq=None):
 
 def InvGammaPrior(value, alpha=1, gamma=1):
     """Prior function for InvGamma parameters."""
-    return scipy.stats.invgamma.pdf(value, alpha, scale=gamma)
+    return ss.invgamma.pdf(value, alpha, scale=gamma)
 
 
 def InvGammaSampler(alpha=1, gamma=1, size=None):
     """Sampling function for Uniform parameters."""
-    return scipy.stats.invgamma.rvs(alpha, scale=gamma, size=size)
+    return ss.invgamma.rvs(alpha, scale=gamma, size=size)
 
 
 def InvGamma(alpha=1, gamma=1, size=None):

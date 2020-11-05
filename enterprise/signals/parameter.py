@@ -5,9 +5,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import functools
 import inspect
-
-import autograd.numpy as np
-import scipy.stats
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
+import jax.scipy.stats as ss
 
 from enterprise.signals.selections import selection_func
 
@@ -184,7 +185,7 @@ def UniformPrior(value, pmin, pmax):
     # we'll let scipy.stats handle errors in pmin/pmax specification
     # this handles vectors correctly, if pmin and pmax are scalars,
     # or if len(value) = len(pmin) = len(pmax)
-    return scipy.stats.uniform.pdf(value, pmin, pmax - pmin)
+    return ss.uniform.pdf(value, pmin, pmax - pmin)
 
 
 def UniformSampler(pmin, pmax, size=None):
@@ -193,7 +194,7 @@ def UniformSampler(pmin, pmax, size=None):
     # we'll let scipy.stats handle errors in pmin/pmax specification
     # this handles vectors correctly, if pmin and pmax are scalars,
     # or if len(value) = len(pmin) = len(pmax)
-    return scipy.stats.uniform.rvs(pmin, pmax - pmin, size=size)
+    return ss.uniform.rvs(pmin, pmax - pmin, size=size)
 
 
 def Uniform(pmin, pmax, size=None):
@@ -225,7 +226,7 @@ def NormalPrior(value, mu, sigma):
     # if mu and sigma are vectors with len(value) = len(mu) = len(sigma),
     # or if len(value) = len(mu) and sigma is len(value) x len(value)
     cov = sigma if np.ndim(sigma) == 2 else sigma ** 2
-    return scipy.stats.multivariate_normal.pdf(value, mean=mu, cov=cov)
+    return ss.multivariate_normal.pdf(value, mean=mu, cov=cov)
 
 
 def NormalSampler(mu, sigma, size=None):
@@ -242,7 +243,7 @@ def NormalSampler(mu, sigma, size=None):
     # size from mu and sigma, so if these are vectors we pass size=None;
     # otherwise we'd get multiple copies of a jointly-normal vector
     cov = sigma if np.ndim(sigma) == 2 else sigma ** 2
-    return scipy.stats.multivariate_normal.rvs(mean=mu, cov=cov, size=(None if np.ndim(mu) == 1 else size))
+    return ss.multivariate_normal.rvs(mean=mu, cov=cov, size=(None if np.ndim(mu) == 1 else size))
 
 
 def Normal(mu=0, sigma=1, size=None):

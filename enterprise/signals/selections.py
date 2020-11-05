@@ -6,8 +6,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import functools
 import inspect
-
-import autograd.numpy as np
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
+import numpy as rnp
 
 
 def call_me_maybe(obj):
@@ -95,25 +97,25 @@ def cut_half(toas):
 
 def by_band(flags):
     """Selection function to split by PPTA frequency band under -B flag"""
-    flagvals = np.unique(flags["B"])
+    flagvals = rnp.unique(flags["B"])
     return {flagval: flags["B"] == flagval for flagval in flagvals}
 
 
 def by_frontend(flags):
     """Selection function to split by frontend under -fe flag"""
-    flagvals = np.unique(flags["fe"])
+    flagvals = rnp.unique(flags["fe"])
     return {flagval: flags["fe"] == flagval for flagval in flagvals}
 
 
 def by_backend(backend_flags):
     """Selection function to split by backend flags."""
-    flagvals = np.unique(backend_flags)
+    flagvals = rnp.unique(backend_flags)
     return {flagval: backend_flags == flagval for flagval in flagvals}
 
 
 def nanograv_backends(backend_flags):
     """Selection function to split by NANOGRav backend flags only."""
-    flagvals = np.unique(backend_flags)
+    flagvals = rnp.unique(backend_flags)
     ngb = ["ASP", "GASP", "GUPPI", "PUPPI"]
     flagvals = filter(lambda x: any(map(lambda y: y in x, ngb)), flagvals)
     return {flagval: backend_flags == flagval for flagval in flagvals}

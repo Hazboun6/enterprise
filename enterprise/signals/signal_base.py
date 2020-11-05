@@ -9,9 +9,10 @@ import collections
 import collections.abc
 import itertools
 import logging
-
-import autograd.numpy as np
-import autograd.scipy.linalg as sl
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
+import jax.scipy.linalg as sl
 import scipy.sparse as sps
 import six
 
@@ -843,7 +844,7 @@ def SignalCollection(metasignals):
                 return None
             Nvec = self.get_ndiag(params)
             res = self.get_detres(params)
-            return Nvec.solve(res, left_array=T)
+            return Nvec._value.solve(res, left_array=T)
 
         @cache_call(["basis_params", "white_params"])
         def get_TNT(self, params):
@@ -959,7 +960,7 @@ class ndarray_alt(np.ndarray):
     """Sub-class of ``np.ndarray`` with custom ``solve`` method."""
 
     def __new__(cls, inputarr):
-        obj = np.asarray(inputarr).view(cls)
+        obj = inputarr._value.view(cls)#np.asarray(inputarr).view(cls)
         return obj
 
     def __add__(self, other):
@@ -1096,7 +1097,7 @@ class ShermanMorrison(object):
         if other == 0:
             return self.__add__(other)
         else:
-            raise TypeError
+            return self.__add__(other)#raise TypeError
 
     def _solve_D1(self, x):
         """Solves :math:`N^{-1}x` where :math:`x` is a vector."""

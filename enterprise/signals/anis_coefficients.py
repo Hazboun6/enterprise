@@ -1,8 +1,10 @@
 from __future__ import division
 
 import healpy as hp
-import autograd.numpy as np
-import autograd.scipy.special as ss
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
+import jax.scipy.special as ss
 
 
 """

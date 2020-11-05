@@ -4,8 +4,9 @@ functions for use in other modules.
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-
-import autograd.numpy as np
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
 from enterprise.signals.parameter import function
 
 ######################################

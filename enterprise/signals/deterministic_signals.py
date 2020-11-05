@@ -5,8 +5,9 @@ delay that is to be subtracted from the residuals.
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-
-import autograd.numpy as np
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
 
 from enterprise import pulsar
 from enterprise.signals import parameter, selections, signal_base, utils

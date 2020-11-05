@@ -9,7 +9,10 @@ import logging
 import os
 
 import astropy.units as u
-import autograd.numpy as np
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
+import numpy as rnp
 from ephem import Ecliptic, Equatorial
 
 import enterprise
@@ -249,10 +252,10 @@ class BasePulsar(object):
         for ii in range(nobs):
             # TODO: make this cleaner
             for f in flags:
-                if np.all(list(map(lambda xx: check(ii, xx), f))):
+                if np.all(np.array(list(map(lambda xx: check(ii, xx), f)))):
                     bflags[ii] = "_".join(self._flags[x][ii] for x in f)
                     break
-        return np.array(bflags)[self._isort]
+        return rnp.array(bflags)[self._isort]
 
     @property
     def theta(self):

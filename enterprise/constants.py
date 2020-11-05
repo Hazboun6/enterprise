@@ -5,8 +5,9 @@ scipy.constants for physical constants.
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-
-import autograd.numpy as np
+from jax.config import config
+config.update("jax_enable_x64", True)
+import jax.numpy as np
 import scipy.constants as sc
 
 # mathematical constants from numpy
